@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tumhari baki animations */
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes meteor {
+  0% { transform: translateY(-100px) rotate(-45deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(-45deg); opacity: 0; }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+.animate-meteor {
+  animation: meteor 4s linear infinite;
+}
