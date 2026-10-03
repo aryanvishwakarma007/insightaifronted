@@ -239,7 +239,7 @@ function App() {
       console.error('Upload failed:', error)
       alert(
         error instanceof TypeError
-          ? 'Upload failed. Make sure the backend server is running on http://127.0.0.1:8000'
+          ? 'Upload failed. Make sure the backend server is running on https://insightaibackend.onrender.com'
           : error.message,
       )
     } finally {
@@ -778,7 +778,7 @@ function Dashboard({ data: initialData, onUpload, uploading, onHome }) {
   const applyFilters = async () => {
     if (!data.analysis_id) { notify('This analysis session has expired. Upload the file again.'); return }
     try {
-      const response = await fetch('http://127.0.0.1:8000/filter', {
+      const response = await fetch('https://insightaibackend.onrender.com/filter', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           analysis_id: data.analysis_id,
@@ -804,7 +804,7 @@ function Dashboard({ data: initialData, onUpload, uploading, onHome }) {
   const clearFilters = () => {
     setFilterCategory('All'); setFilterLocation('All'); setDateFrom(''); setDateTo('')
     // Re-fetch the original dashboard through the current session.
-    fetch('http://127.0.0.1:8000/filter', {
+    fetch('https://insightaibackend.onrender.com/filter', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ analysis_id: data.analysis_id, filters: {} }),
     }).then((r) => r.json()).then((payload) => setData((prev) => ({ ...prev, ...payload }))).catch(() => {})
@@ -818,7 +818,7 @@ function Dashboard({ data: initialData, onUpload, uploading, onHome }) {
     setChatMessages((m) => [...m, { role: 'user', text: question }])
     setChatQuestion('')
     try {
-      const response = await fetch('http://127.0.0.1:8000/chat', {
+      const response = await fetch('https://insightaibackend.onrender.com/chat', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ analysis_id: data.analysis_id, question }),
       })
@@ -834,7 +834,7 @@ function Dashboard({ data: initialData, onUpload, uploading, onHome }) {
     if (!data.analysis_id || forecastBusy) return
     setForecastBusy(true)
     try {
-      const response = await fetch('http://127.0.0.1:8000/forecast', {
+      const response = await fetch('https://insightaibackend.onrender.com/forecast', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ analysis_id: data.analysis_id, periods: 6 }),
       })
@@ -848,7 +848,7 @@ function Dashboard({ data: initialData, onUpload, uploading, onHome }) {
   const downloadServerReport = async (format) => {
     if (!data.analysis_id) return
     try {
-      const response = await fetch('http://127.0.0.1:8000/report', {
+      const response = await fetch('https://insightaibackend.onrender.com/report', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ analysis_id: data.analysis_id, format }),
       })
